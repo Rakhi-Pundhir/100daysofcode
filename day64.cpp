@@ -1,37 +1,38 @@
 #include<bits/stdc++.h>
 using namespace std;
-class Solution {
-  public:
-    bool canPair(vector<int> nums, int k) {
-        int n=nums.size();
-        if(n%2!=0)
-        return false;
-        unordered_map<int,int> m;
-        for(int i=0;i<n;i++)
+struct Node
+{
+    int data;
+    struct Node *next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+    
+};
+class Solution
+{
+    public:
+    void linkdelete(struct Node  *head, int M, int N)
+    {
+        Node* temp=head;
+        int k=0;
+        while(temp!=NULL && temp->next!=NULL)
         {
-            m[(nums[i]%k)]++;
+            k++;
+            if(k==M)
+            {
+                Node* t=temp;
+                while(N--)
+                {
+                    if(t!=NULL && t->next!=NULL)
+                    t=t->next;
+                }
+                temp->next=t->next;
+                k=0;
+            }
+            temp=temp->next;
         }
-        for(int i=0;i<n;i++)
-        {
-            int rem=nums[i]%k;
-            if(rem==0)
-            {
-                if(m[rem]%2!=0)
-                return false;
-            }
-            else if(2*rem==k)
-            {
-                if(m[rem]%2!=0)
-                return false;
-            }
-            else
-            {
-                int a=m[rem];
-                int b=m[k-rem];
-                if(a!=b)
-                return false;
-            }
-        }
-       return true; 
     }
 };
