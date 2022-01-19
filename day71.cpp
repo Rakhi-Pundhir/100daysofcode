@@ -1,24 +1,30 @@
 #include<bits/stdc++.h>
 using namespace std;
-class Solution {
-public:
-    int earliestFullBloom(vector<int>& plantTime, vector<int>& growTime) {
-        int n=plantTime.size();
-        int sd=0;
-        int mx=0;
-        vector<pair<int,int>> v(n);
-        for(int i=0;i<n;i++)
+class Solution{
+  public:
+    int minJumps(int arr[], int n){
+        if(n==1 || n==0)
+        return 0;
+        if(arr[0]==0)
+        return -1;
+        int steps=arr[0];
+        int maxr=arr[0];
+        int jump=1;
+        for(int i=1;i<n;i++)
         {
-            v.push_back({growTime[i],plantTime[i]});
+            if(i==n-1)
+            return jump;
+            maxr=max(maxr,i+arr[i]);
+            steps--;
+            if(steps==0)
+            {
+                jump++;
+                if(maxr<=i)
+                return -1;
+                steps=maxr-i;
+            }
         }
-        sort(v.begin(),v.end(),greater<pair<int,int>>());
-        for(int i=0;i<n;i++)
-        {
-            int x=v[i].first+v[i].second;
-            int bd=x+sd;
-            sd+=v[i].second;
-            mx=max(mx,bd);
-        }
-        return mx;
+        
+        return -1;
     }
 };
